@@ -679,6 +679,7 @@ declare module "leanengine" {
             changed: boolean;
             className: string;
 
+            constructor(data?:any);
             constructor(className?: string, options?: any);
             constructor(attributes?: string[], options?: any);
             /**
