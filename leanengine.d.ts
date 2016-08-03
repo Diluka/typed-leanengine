@@ -620,7 +620,7 @@ declare module "leanengine" {
              * @param {AV.Object} child The child object.
              * @return {AV.Query}
              */
-            static reverseQuery(parentClass: ObjectClass, relationKey: string, child: Object): Query;
+            static reverseQuery(parentClass: typeof Object, relationKey: string, child: Object): Query;
             static reverseQuery(parentClass: string, relationKey: string, child: Object): Query;
 
             /**
@@ -641,8 +641,6 @@ declare module "leanengine" {
              */
             remove(object: Object): void;
         }
-
-        type ObjectClass = new (data?: any) => Object;
 
         /**
          * Creates a new model with defined attributes. A client id (cid) is
@@ -720,7 +718,7 @@ declare module "leanengine" {
              *     this method.
              * @return {Class} A new subclass of AV.Object.
              */
-            static extend(className: string, protoProps?: any, classProps?: any): ObjectClass;
+            static extend(className: string, protoProps?: any, classProps?: any): typeof Object;
 
             /**
              * Fetch the given list of AV.Object.
@@ -2623,7 +2621,7 @@ declare module "leanengine" {
              * @param {Class} name The AV.Object subclass to register the before save function for. This can instead be a String that is the className of the subclass.
              * @param {Function} func The function to run before a save. This function should take two parameters a AV.Cloud.BeforeSaveRequest and a AV.Cloud.BeforeSaveResponse.
              */
-            function beforeSave(name: ObjectClass | string, func: Function);
+            function beforeSave(name: typeof Object | string, func: Function);
 
             /**
              * Registers an after save function.
@@ -2639,7 +2637,7 @@ declare module "leanengine" {
              * @param {Class} name The AV.Object subclass to register the after save function for. This can instead be a String that is the className of the subclass.
              * @param {Function} func The function to run after a save. This function should take just one parameter AV.Cloud.AfterSaveRequest.
              */
-            function afterSave(name: ObjectClass | string, func: Function);
+            function afterSave(name: typeof Object | string, func: Function);
 
             /**
              * Registers an after update function.
@@ -2655,7 +2653,7 @@ declare module "leanengine" {
              * @param {Class} name The AV.Object subclass to register the after update function for. This can instead be a String that is the className of the subclass.
              * @param {Function} func The function to run after a update. This function should take just one parameter AV.Cloud.AfterUpdateRequest.
              */
-            function afterUpdate(name: ObjectClass | string, func: Function);
+            function afterUpdate(name: typeof Object | string, func: Function);
 
             /**
              * Registers a before delete function.
@@ -2672,7 +2670,7 @@ declare module "leanengine" {
              * @param {Class} arg1 The AV.Object subclass to register the before delete function for. This can instead be a String that is the className of the subclass.
              * @param {Function} func The function to run before a delete. This function should take two parameters a AV.Cloud.BeforeDeleteRequest and a AV.Cloud.BeforeDeleteResponse
              */
-            function beforeDelete(name: ObjectClass | string, func: Function);
+            function beforeDelete(name: typeof Object | string, func: Function);
 
             /**
              * Registers an after delete function.
@@ -2689,7 +2687,7 @@ declare module "leanengine" {
              * @param {Class} arg1 The AV.Object subclass to register the before save function for. This can instead be a String that is the className of the subclass.
              * @param {Function} func The function to run before a save. This function should take just one parameter, AV.Cloud.AfterDeleteRequest.
              */
-            function afterDelete(name: ObjectClass | string, func: Function);
+            function afterDelete(name: typeof Object | string, func: Function);
 
             /**
              * Registers an on-login function.
