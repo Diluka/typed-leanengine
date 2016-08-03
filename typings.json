@@ -1,6 +1,6 @@
 {
   "name": "leanengine",
-  "main": "index.d.ts",
+  "main": "leanengine.d.ts",
   "homepage": "https://github.com/Diluka/typed-leanengine",
   "version": "1.0.0",
   "globalDependencies": {
