@@ -679,7 +679,7 @@ declare module "leanengine" {
             changed: boolean;
             className: string;
 
-            constructor(data?:any);
+            constructor(data?: any);
             constructor(className?: string, options?: any);
             constructor(attributes?: string[], options?: any);
             /**
@@ -2719,6 +2719,10 @@ declare module "leanengine" {
              * </p>
              */
             function useMasterKey();
+
+            function CookieSession(options): (req, res, next: Function) => any;
+
+            function HttpsRedirect(options): (req, res, next: Function) => any;
         }
 
         /**
