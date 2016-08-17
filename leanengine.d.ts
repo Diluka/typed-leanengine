@@ -98,6 +98,8 @@ declare module "leanengine" {
         */
         class Promise<T> {
 
+            constructor(fn: (resolve: (any) => void, reject?: (any) => void) => void);
+
             /**
              * Returns a new promise that is resolved with a given value.
              * @return {AV.Promise} the new promise.
