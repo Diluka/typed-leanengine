@@ -96,7 +96,7 @@ declare module "leanengine" {
         * @see AV.Promise.prototype.then
         * @class
         */
-        class Promise<T> {
+        class Promise<T> implements IPromise<T> {
 
             constructor(fn: (resolve: (any) => void, reject?: (any) => void) => void);
 
