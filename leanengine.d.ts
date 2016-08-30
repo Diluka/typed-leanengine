@@ -2077,6 +2077,7 @@ declare module "leanengine" {
              *     the login is complete.
              */
             logIn(options?: SuccessFailureOptions): Promise<User>;
+            logOut(): void;
             // fetch(options?: SuccessFailureOptions): Promise<User>;
             // save(arg1?: any, arg2?: any, arg3?: any): Promise<User>;
             /**
