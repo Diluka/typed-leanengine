@@ -998,6 +998,7 @@ declare namespace AV {
          *   }, function(error) {
          *     // The save failed.  Error is an instance of AVError.
          *   });</pre>
+         * @param {Object} attrs object's attributes
          * @param {Object} options Optional Backbone-like options object to be passed in to set.
          * @param {Boolean} options.fetchWhenSave fetch and update object after save succeeded
          * @param {AV.Query} options.query Save object only when it matches the query
@@ -1005,7 +1006,8 @@ declare namespace AV {
          *     completes.
          * @see AVError
          */
-        save<T>(options?: Object.SaveOptions, arg2?: any, arg3?: any): Promise<T>;
+        save<T>(attrs?: any, options?: Object.SaveOptions): Promise<T>;
+        save<T>(key: string, value: any, options?: Object.SaveOptions): Promise<T>;
         /**
          * Sets a hash of model attributes on the object, firing
          * <code>"change"</code> unless you choose to silence it.
