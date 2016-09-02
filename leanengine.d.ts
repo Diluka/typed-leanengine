@@ -1,6 +1,33 @@
 //based on https://github.com/leancloud/typed-leancloud-storage
 
-declare namespace AV {
+declare namespace Express {
+    export interface Application{
+    }
+
+    export interface Request {
+        /**
+         * current login user
+         */
+        currentUser: AV.User;
+    }
+
+    export interface Response {
+
+        /**
+         * remove current user from session
+         */
+        clearCurrentUser();
+
+        /**
+         * save current user in session
+         *
+         * @param {AV.User} user
+         */
+        saveCurrentUser(user: AV.User);
+    }
+}
+
+declare module AV {
 
     var applicationId: string;
     var applicationKey: string;
