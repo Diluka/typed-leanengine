@@ -1,7 +1,7 @@
 //based on https://github.com/leancloud/typed-leancloud-storage
 
 declare namespace Express {
-    export interface Application{
+    export interface Application {
     }
 
     export interface Request {
@@ -705,9 +705,8 @@ declare module AV {
         changed: boolean;
         className: string;
 
-        constructor(data?: any);
-        constructor(className?: string, options?: any);
-        constructor(attributes?: string[], options?: any);
+        constructor(attributes?: any, options?: any);
+        constructor(className: string, attributes?: any, options?: any);
         /**
          * Creates an instance of a subclass of AV.Object for the give classname
          * and id.
