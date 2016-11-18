@@ -1066,7 +1066,8 @@ declare module AV {
          * @see AV.Object#validate
          * @see AVError
          */
-        set(key: string, value: any, options?: Object.SetOptions): boolean;
+        set(data: any, options?: Object.SetOptions): Object | boolean;
+        set(key: string, value: any, options?: Object.SetOptions): Object | boolean;
         /**
          * Sets the ACL to be used for this object.
          * @param {AV.ACL} acl An instance of AV.ACL.
