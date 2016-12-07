@@ -128,12 +128,12 @@ declare module AV {
          * Returns a new promise that is resolved with a given value.
          * @return {AV.Promise} the new promise.
          */
-        static as<U>(resolvedValue: U): Promise<U>;
+        static as<U>(resolvedValue: U): IPromise<U>;
         /**
          * Returns a new promise that is rejected with a given error.
          * @return {AV.Promise} the new promise.
          */
-        static error<U>(error: U): Promise<U>;
+        static error<U>(error: U): IPromise<U>;
         /**
          * Returns true iff the given object fulfils the Promise interface.
          * @return {Boolean}
@@ -166,14 +166,14 @@ declare module AV {
          * @param {Array} promises a list of promises to wait for.
          * @return {AV.Promise} the new promise.
          */
-        static when(...promises: Promise<any>[]): Promise<any>;
+        static when(...promises: IPromise<any>[]): IPromise<any>;
         /**
          * Just like AV.Promise.when, but it calls resolveCallbck function
          * with one results array and calls rejectCallback function as soon as any one
          * of the input promises rejects.
          * @see AV.Promise.when
          */
-        static all(promises: Promise<any>[]): Promise<any[]>;
+        static all(promises: IPromise<any>[]): IPromise<any[]>;
         /**
          * Returns a promise that resolves or rejects as soon as one
          * of the promises in the iterable resolves or rejects, with
@@ -197,7 +197,7 @@ declare module AV {
          * @param {Array} promises a list of promises to wait for.
          * @return {AV.Promise} the new promise.
          */
-        static race(...promises: Promise<any>[]): Promise<any>;
+        static race(...promises: IPromise<any>[]): IPromise<any>;
 
         static setPromisesAPlusCompliant(isCompliant: boolean): void;
         static setDebugError(enable: boolean): void;
@@ -206,15 +206,15 @@ declare module AV {
          * Add handlers to be called when the promise
          * is either resolved or rejected
          */
-        always(callback: Function): Promise<T>;
+        always(callback: Function): IPromise<T>;
         /**
          * Add handlers to be called when the Promise object is resolved
          */
-        done(callback: Function): Promise<T>;
+        done(callback: Function): IPromise<T>;
         /**
          * Add handlers to be called when the Promise object is rejected
          */
-        fail(callback: Function): Promise<T>;
+        fail(callback: Function): IPromise<T>;
         /**
          * Marks this promise as fulfilled, firing any callbacks waiting on it.
          * @param {Object} error the error to pass to the callbacks.
@@ -245,11 +245,11 @@ declare module AV {
          * one is.
          */
         then<U>(resolvedCallback: (value: T) => IPromise<U>,
-            rejectedCallback?: (reason: any) => IPromise<U>): Promise<U>;
+            rejectedCallback?: (reason: any) => IPromise<U>): IPromise<U>;
         then<U>(resolvedCallback: (value: T) => U,
-            rejectedCallback?: (reason: any) => IPromise<U>): Promise<U>;
+            rejectedCallback?: (reason: any) => IPromise<U>): IPromise<U>;
         then<U>(resolvedCallback: (value: T) => U,
-            rejectedCallback?: (reason: any) => U): Promise<U>;
+            rejectedCallback?: (reason: any) => U): IPromise<U>;
 
         /**
          * Add handlers to be called when the Promise object is rejected.
@@ -262,20 +262,20 @@ declare module AV {
          *                   one is.
          * @function
          */
-        catch(onRejected: Function): Promise<T>;
+        catch(onRejected: Function): IPromise<T>;
 
         /**
          * Alias of AV.Promise.prototype.always
          * @function
          * @see AV.Promise#always
          */
-        finally(callback: Function): Promise<T>;
+        finally(callback: Function): IPromise<T>;
         /**
          * Alias of AV.Promise.prototype.done
          * @function
          * @see AV.Promise#done
          */
-        try(callback: Function): Promise<T>;
+        try(callback: Function): IPromise<T>;
     }
 
     interface IBaseObject {
@@ -469,7 +469,7 @@ declare module AV {
         * @return {AV.Promise} A promise that is fulfilled when the destroy
         *     completes.
         */
-        destroy<T>(): Promise<T>;
+        destroy<T>(): IPromise<T>;
         metaData(): any;
         metaData(metaKey: string): any;
         /**
@@ -510,7 +510,7 @@ declare module AV {
          * @param {Object} options A Backbone-style options object.
          * @return {AV.Promise} Promise that is resolved when the save finishes.
          */
-        save<T>(options?: SuccessFailureOptions): Promise<T>;
+        save<T>(options?: SuccessFailureOptions): IPromise<T>;
         /**
         * Returns the file's size.
         * @return {Number} The file's size in bytes.
@@ -566,9 +566,9 @@ declare module AV {
         * @return {AV.Promise} A promise that is fulfilled when the fetch
         *     completes.
         */
-        fetch<T>(): Promise<T>;
-        fetch<T>(options: Object.FetchOptions): Promise<T>;
-        fetch<T>(fetchOptions: any, options: Object.FetchOptions): Promise<T>;
+        fetch<T>(): IPromise<T>;
+        fetch<T>(options: Object.FetchOptions): IPromise<T>;
+        fetch<T>(fetchOptions: any, options: Object.FetchOptions): IPromise<T>;
     }
 
     /**
@@ -754,8 +754,8 @@ declare module AV {
          * @param {String} options.sessionToken specify user's session, used in LeanEngine.
          * @return {Promise.<AV.Object[]>} The given list of <code>AV.Object</code>, updated
          */
-        static fetchAll<T>(list: Object[], options?: SuccessFailureOptions): Promise<T>;
-        static fetchAllIfNeeded<T>(list: Object[], options: SuccessFailureOptions): Promise<T>;
+        static fetchAll<T>(list: Object[], options?: SuccessFailureOptions): IPromise<T>;
+        static fetchAllIfNeeded<T>(list: Object[], options: SuccessFailureOptions): IPromise<T>;
         /**
          * Delete objects in batch.The objects className must be the same.
          * @param {Array} The <code>AV.Object</code> array to be deleted.
@@ -764,7 +764,7 @@ declare module AV {
          * @return {AV.Promise} A promise that is fulfilled when the save
          *     completes.
          */
-        static destroyAll<T>(list: Object[], options?: Object.DestroyAllOptions): Promise<T>;
+        static destroyAll<T>(list: Object[], options?: Object.DestroyAllOptions): IPromise<T>;
 
         /**
          * Saves the given list of AV.Object.
@@ -794,7 +794,7 @@ declare module AV {
          * @param {Array} list A list of <code>AV.Object</code>.
          * @param {Object} options A Backbone-style callback object.
          */
-        static saveAll<T>(list: Object[], options?: Object.SaveAllOptions): Promise<T>;
+        static saveAll<T>(list: Object[], options?: Object.SaveAllOptions): IPromise<T>;
         /**
          * Creates a new model with defined attributes,
          * It's the same with
@@ -866,7 +866,7 @@ declare module AV {
          * @return {AV.Promise} A promise that is fulfilled when the destroy
          *     completes.
          */
-        destroy<T>(options?: Object.DestroyOptions): Promise<T>;
+        destroy<T>(options?: Object.DestroyOptions): IPromise<T>;
         /**
          * Returns true if this object has been modified since its last
          * save/refresh.  If an attribute is specified, it returns true only if that
@@ -899,9 +899,9 @@ declare module AV {
          * @return {AV.Promise} A promise that is fulfilled when the fetch
          *     completes.
          */
-        fetch<T>(): Promise<T>;
-        fetch<T>(options: Object.FetchOptions): Promise<T>;
-        fetch<T>(fetchOptions: any, options: Object.FetchOptions): Promise<T>;
+        fetch<T>(): IPromise<T>;
+        fetch<T>(options: Object.FetchOptions): IPromise<T>;
+        fetch<T>(fetchOptions: any, options: Object.FetchOptions): IPromise<T>;
         /**
         * Set whether to enable fetchWhenSave option when updating object.
         * When set true, SDK would fetch the latest object after saving.
@@ -1032,8 +1032,8 @@ declare module AV {
          *     completes.
          * @see AVError
          */
-        save<T>(attrs?: any, options?: Object.SaveOptions): Promise<T>;
-        save<T>(key: string, value: any, options?: Object.SaveOptions): Promise<T>;
+        save<T>(attrs?: any, options?: Object.SaveOptions): IPromise<T>;
+        save<T>(key: string, value: any, options?: Object.SaveOptions): IPromise<T>;
         /**
          * Sets a hash of model attributes on the object, firing
          * <code>"change"</code> unless you choose to silence it.
@@ -1189,7 +1189,7 @@ declare module AV {
         initialize(): void;
         add(models: any[], options?: Collection.AddOptions): Collection<T>;
         at(index: number): Object;
-        fetch(options?: Collection.FetchOptions): Promise<T>;
+        fetch(options?: Collection.FetchOptions): IPromise<T>;
         create(model: Object, options?: Collection.CreateOptions): Object;
         get(id: string): Object;
         getByCid(cid: any): any;
@@ -1362,7 +1362,7 @@ declare module AV {
          * @return {AV.Promise} A promise that is resolved with the results when
          * the query completes,it's optional.
          */
-        static doCloudQuery<T>(cql: string, pvalues?: any, options?: Query.FindOptions): Promise<T>;
+        static doCloudQuery<T>(cql: string, pvalues?: any, options?: Query.FindOptions): IPromise<T>;
 
         /**
          * Also sorts the results in ascending order by the given key. The previous sort keys have
@@ -1425,7 +1425,7 @@ declare module AV {
          * @return {AV.Promise} A promise that is resolved with the count when
          * the query completes.
          */
-        count(options?: Query.CountOptions): Promise<number>;
+        count(options?: Query.CountOptions): IPromise<number>;
         /**
          * Sorts the results in descending order by the given key.
          *
@@ -1474,7 +1474,7 @@ declare module AV {
          * @return {AV.Promise} A promise that will be fulfilled once the
          *     iteration has completed.
          */
-        each<T>(callback: Function, options?: SuccessFailureOptions): Promise<T>;
+        each<T>(callback: Function, options?: SuccessFailureOptions): IPromise<T>;
         /**
          * Add a constraint for finding string values that end with a provided
          * string.  This will be slow for large datasets.
@@ -1506,7 +1506,7 @@ declare module AV {
          * @return {AV.Promise} A promise that is resolved with the results when
          * the query completes.
          */
-        find<T>(options?: Query.FindOptions): Promise<T>;
+        find<T>(options?: Query.FindOptions): IPromise<T>;
         /**
          * Retrieves at most one AV.Object that satisfies this query.
          *
@@ -1517,7 +1517,7 @@ declare module AV {
          * @return {AV.Promise} A promise that is resolved with the object when
          * the query completes.
          */
-        first<T>(options?: Query.FirstOptions): Promise<T>;
+        first<T>(options?: Query.FirstOptions): IPromise<T>;
         /**
          * Constructs a AV.Object whose id is already known by fetching data from
          * the server.  Either options.success or options.error is called when the
@@ -1526,7 +1526,7 @@ declare module AV {
          * @param {} objectId The id of the object to be fetched.
          * @param {Object} options A Backbone-style options object.
          */
-        get<T>(objectId: string, options?: SuccessFailureOptions): Promise<T>;
+        get<T>(objectId: string, options?: SuccessFailureOptions): IPromise<T>;
         /**
          * Add a constraint to the query that requires a particular key's value to
          * be greater than the provided value.
@@ -1702,7 +1702,7 @@ declare module AV {
          * @return {AV.Promise} A promise that is fulfilled when the save
          *     completes.
          */
-        destroyAll(options?: Query.FindOptions): Promise<Object[]>;
+        destroyAll(options?: Query.FindOptions): IPromise<Object[]>;
         /**
          * Add a constraint to the query that requires a particular
          * <strong>array</strong> key's length to be equal to the provided value.
@@ -1829,7 +1829,7 @@ declare module AV {
          *     the signup completes.
          * @see AV.User#signUp
          */
-        static signUp<T>(username: string, password: string, attrs: any, options?: SuccessFailureOptions): Promise<T>;
+        static signUp<T>(username: string, password: string, attrs: any, options?: SuccessFailureOptions): IPromise<T>;
         /**
          * Logs in a user with a username (or email) and password. On success, this
          * saves the session to disk, so you can retrieve the currently logged in
@@ -1844,13 +1844,13 @@ declare module AV {
          *     the login completes.
          * @see AV.User#logIn
          */
-        static logIn(username: string, password: string, options?: SuccessFailureOptions): Promise<User>;
+        static logIn(username: string, password: string, options?: SuccessFailureOptions): IPromise<User>;
         /**
          * Logs out the currently logged in user session. This will remove the
          * session from disk, log out of linked services, and future calls to
          * <code>current</code> will return <code>null</code>.
          */
-        static logOut(): Promise<void>;
+        static logOut(): IPromise<void>;
         // static allowCustomUserClass(isAllowed: boolean): void;
         /**
          * Logs in a user with a session token. On success, this saves the session
@@ -1864,7 +1864,7 @@ declare module AV {
          * @return {AV.Promise} A promise that is fulfilled with the user when
          *     the login completes.
          */
-        static become(sessionToken: string, options?: SuccessFailureOptions): Promise<User>;
+        static become(sessionToken: string, options?: SuccessFailureOptions): IPromise<User>;
         /**
          * Logs in a user with a mobile phone number and password. On success, this
          * saves the session to disk, so you can retrieve the currently logged in
@@ -1879,7 +1879,7 @@ declare module AV {
          *     the login completes.
          * @see AV.User#logIn
          */
-        static logInWithMobilePhone(mobilePhone: string, password: string, options?: SuccessFailureOptions): Promise<User>;
+        static logInWithMobilePhone(mobilePhone: string, password: string, options?: SuccessFailureOptions): IPromise<User>;
         /**
          * Logs in a user with a mobile phone number and sms code sent by
          * AV.User.requestLoginSmsCode.On success, this
@@ -1895,7 +1895,7 @@ declare module AV {
          *     the login completes.
          * @see AV.User#logIn
          */
-        static logInWithMobilePhoneSmsCode(mobilePhone: string, smsCode: string, options?: SuccessFailureOptions): Promise<User>;
+        static logInWithMobilePhoneSmsCode(mobilePhone: string, smsCode: string, options?: SuccessFailureOptions): IPromise<User>;
 
         /**
          * Sign up or logs in a user with a third party auth data(AccessToken).
@@ -1914,7 +1914,7 @@ declare module AV {
          * });
          * @see {@link https://leancloud.cn/docs/js_guide.html#绑定第三方平台账户}
          */
-        static signUpOrlogInWithAuthData(data: any, platform: string, callback: any): Promise<User>;
+        static signUpOrlogInWithAuthData(data: any, platform: string, callback: any): IPromise<User>;
         /**
          * Sign up or logs in a user with a mobilePhoneNumber and smsCode.
          * On success, this saves the session to disk, so you can retrieve the currently
@@ -1931,7 +1931,7 @@ declare module AV {
          * @see AV.User#signUpOrlogInWithMobilePhone
          * @see AV.Cloud.requestSmsCode
          */
-        static signUpOrlogInWithMobilePhone(mobilePhoneNumber: string, smsCode: string, attributes?: any, options?: SuccessFailureOptions): Promise<User>;
+        static signUpOrlogInWithMobilePhone(mobilePhoneNumber: string, smsCode: string, attributes?: any, options?: SuccessFailureOptions): IPromise<User>;
         /**
          * Requests a verify email to be sent to the specified email address
          * associated with the user account. This email allows the user to securely
@@ -1943,7 +1943,7 @@ declare module AV {
          *     doesn't verify their email address.
          * @param {Object} options A Backbone-style options object.
          */
-        static requestEmailVerfiy<T>(email: string, options?: SuccessFailureOptions): Promise<T>;
+        static requestEmailVerfiy<T>(email: string, options?: SuccessFailureOptions): IPromise<T>;
         /**
          * Requests a logIn sms code to be sent to the specified mobile phone
          * number associated with the user account. This sms code allows the user to
@@ -1955,7 +1955,7 @@ declare module AV {
          *           user that want to login by AV.User.logInWithMobilePhoneSmsCode
          * @param {Object} options A Backbone-style options object.
          */
-        static requestLoginSmsCode<T>(mobilePhone: string, options?: SuccessFailureOptions): Promise<T>;
+        static requestLoginSmsCode<T>(mobilePhone: string, options?: SuccessFailureOptions): IPromise<T>;
         /**
          * Requests a verify sms code to be sent to the specified mobile phone
          * number associated with the user account. This sms code allows the user to
@@ -1967,7 +1967,7 @@ declare module AV {
          *                  user that doesn't verify their mobile phone number.
          * @param {Object} options A Backbone-style options object.
          */
-        static requestMobilePhoneVerify<T>(mobilePhone: string, options?: SuccessFailureOptions): Promise<T>;
+        static requestMobilePhoneVerify<T>(mobilePhone: string, options?: SuccessFailureOptions): IPromise<T>;
         /**
          * Requests a password reset email to be sent to the specified email address
          * associated with the user account. This email allows the user to securely
@@ -1979,7 +1979,7 @@ declare module AV {
          *     forgot their password.
          * @param {Object} options A Backbone-style options object.
          */
-        static requestPasswordReset<T>(email: string, options?: SuccessFailureOptions): Promise<T>;
+        static requestPasswordReset<T>(email: string, options?: SuccessFailureOptions): IPromise<T>;
         /**
          * Requests a reset password sms code to be sent to the specified mobile phone
          * number associated with the user account. This sms code allows the user to
@@ -1991,7 +1991,7 @@ declare module AV {
          *                  user that doesn't verify their mobile phone number.
          * @param {Object} options A Backbone-style options object.
          */
-        static requestPasswordResetBySmsCode<T>(mobilePhone: string, options?: SuccessFailureOptions): Promise<T>;
+        static requestPasswordResetBySmsCode<T>(mobilePhone: string, options?: SuccessFailureOptions): IPromise<T>;
         /**
          * Makes a call to reset user's account password by sms code and new password.
         * The sms code is sent by AV.User.requestPasswordResetBySmsCode.
@@ -2001,7 +2001,7 @@ declare module AV {
         * @return {AV.Promise} A promise that will be resolved with the result
         * of the function.
         */
-        static resetPasswordBySmsCode<T>(code: string, password: string, options?: SuccessFailureOptions): Promise<T>;
+        static resetPasswordBySmsCode<T>(code: string, password: string, options?: SuccessFailureOptions): IPromise<T>;
         /**
          * Makes a call to verify sms code that sent by AV.User.Cloud.requestSmsCode
          * If verify successfully,the user mobilePhoneVerified attribute will be true.
@@ -2010,7 +2010,7 @@ declare module AV {
          * @return {AV.Promise} A promise that will be resolved with the result
          * of the function.
          */
-        static verifyMobilePhone<T>(code: string, options?: SuccessFailureOptions): Promise<T>;
+        static verifyMobilePhone<T>(code: string, options?: SuccessFailureOptions): IPromise<T>;
 
         /**
          * Associate a user with a third party auth data(AccessToken).
@@ -2029,7 +2029,7 @@ declare module AV {
          *   //console.error("error: ", error);
          * });
          */
-        static associateWithAuthData(userObj: User, platform: string, authData: any): Promise<User>;
+        static associateWithAuthData(userObj: User, platform: string, authData: any): IPromise<User>;
 
         /**
          *Create a follower query for special user to query the user's followers.
@@ -2050,7 +2050,7 @@ declare module AV {
          * either from memory or localStorage, if necessary.
          * @return {AV.Promise} resolved with the currently logged in AV.User.
          */
-        static currentAsync(): Promise<User>;
+        static currentAsync(): IPromise<User>;
 
 
 
@@ -2070,7 +2070,7 @@ declare module AV {
          *     finishes.
          * @see AV.User.signUp
          */
-        signUp(attrs?: any, options?: SuccessFailureOptions): Promise<User>;
+        signUp(attrs?: any, options?: SuccessFailureOptions): IPromise<User>;
         /**
          * Sign up or logs in a user with a mobilePhoneNumber and smsCode.
          * On success, this saves the session to disk, so you can retrieve the currently
@@ -2087,7 +2087,7 @@ declare module AV {
          * @see AV.User#signUpOrlogInWithMobilePhone
          * @see AV.Cloud.requestSmsCode
          */
-        signUpOrlogInWithMobilePhone(attrs?: any, options?: SuccessFailureOptions): Promise<User>;
+        signUpOrlogInWithMobilePhone(attrs?: any, options?: SuccessFailureOptions): IPromise<User>;
         /**
          * Logs in a AV.User. On success, this saves the session to localStorage,
          * so you can retrieve the currently logged in user using
@@ -2102,10 +2102,10 @@ declare module AV {
          * @return {AV.Promise} A promise that is fulfilled with the user when
          *     the login is complete.
          */
-        logIn(options?: SuccessFailureOptions): Promise<User>;
+        logIn(options?: SuccessFailureOptions): IPromise<User>;
         logOut(): void;
-        // fetch(options?: SuccessFailureOptions): Promise<User>;
-        // save(arg1?: any, arg2?: any, arg3?: any): Promise<User>;
+        // fetch(options?: SuccessFailureOptions): IPromise<User>;
+        // save(arg1?: any, arg2?: any, arg3?: any): IPromise<User>;
         /**
          * Checks whether this user is the current user and has been authenticated.
          * @return (Boolean) whether this user is the current user and is logged in.
@@ -2125,7 +2125,7 @@ declare module AV {
          *     success and error callbacks that will be invoked once the iteration
          *     has finished.
          */
-        follow<T>(target: User | string, options?: SuccessFailureOptions): Promise<T>;
+        follow<T>(target: User | string, options?: SuccessFailureOptions): IPromise<T>;
 
         /**
          * Unfollow a user.
@@ -2135,20 +2135,20 @@ declare module AV {
          *     success and error callbacks that will be invoked once the iteration
          *     has finished.
          */
-        unfollow<T>(target: User | string, options?: SuccessFailureOptions): Promise<T>;
+        unfollow<T>(target: User | string, options?: SuccessFailureOptions): IPromise<T>;
 
         /**
          *Create a follower query to query the user's followers.
          * @since 0.3.0
          * @see AV.User#followerQuery
          */
-        followerQuery(): Promise<User>;
+        followerQuery(): IPromise<User>;
         /**
          *Create a followee query to query the user's followees.
         * @since 0.3.0
         * @see AV.User#followeeQuery
         */
-        followeeQuery(): Promise<User>;
+        followeeQuery(): IPromise<User>;
 
         /**
          * Update user's new password safely based on old password.
@@ -2158,7 +2158,7 @@ declare module AV {
          *     success and error callbacks that will be invoked once the iteration
          *     has finished.
          */
-        updatePassword<T>(oldPassword: string, newPassword: string, options?: SuccessFailureOptions): Promise<T>;
+        updatePassword<T>(oldPassword: string, newPassword: string, options?: SuccessFailureOptions): IPromise<T>;
 
         /**
          * Returns get("email").
@@ -2218,7 +2218,7 @@ declare module AV {
 
     namespace Analytics {
 
-        function track<T>(name: string, dimensions: any): Promise<T>;
+        function track<T>(name: string, dimensions: any): IPromise<T>;
     }
 
 
@@ -2414,7 +2414,7 @@ declare module AV {
          * an error function that takes a AVError and will be called if the push
          * failed.
          */
-        function send<T>(data: PushData, options?: SendOptions): Promise<T>;
+        function send<T>(data: PushData, options?: SendOptions): IPromise<T>;
 
         interface PushData {
             channels?: string[];
@@ -2474,7 +2474,7 @@ declare module AV {
          * @return {AV.Promise} A promise that will be resolved with the result
          * of the function.
          */
-        function run<T>(name: string, data?: any, options?: SuccessFailureOptions): Promise<T>;
+        function run<T>(name: string, data?: any, options?: SuccessFailureOptions): IPromise<T>;
 
         /**
          * Makes a call to a cloud function, you can send {AV.Object} as param or a field of param; the response
@@ -2484,7 +2484,7 @@ declare module AV {
          * @param {Object} options A Backbone-style options object.
          * @return {AV.Promise} A promise that will be resolved with the result of the function.
          */
-        function rpc<T>(name: string, data?: any, options?: SuccessFailureOptions): Promise<T>;
+        function rpc<T>(name: string, data?: any, options?: SuccessFailureOptions): IPromise<T>;
 
         /**
          * Make a call to request server date time.
@@ -2497,7 +2497,7 @@ declare module AV {
          * of the function.
          * @since 0.5.9
          */
-        function getServerDate<T>(): Promise<T>;
+        function getServerDate<T>(): IPromise<T>;
 
         /**
          * Makes a call to request a sms code for operation verification.
@@ -2507,7 +2507,7 @@ declare module AV {
          * @return {AV.Promise} A promise that will be resolved with the result
          * of the function.
          */
-        function requestSmsCode<T>(data: any, options?: SuccessFailureOptions): Promise<T>;
+        function requestSmsCode<T>(data: any, options?: SuccessFailureOptions): IPromise<T>;
 
         /**
          * Makes a call to verify sms code that sent by AV.Cloud.requestSmsCode
@@ -2517,7 +2517,7 @@ declare module AV {
          * @return {AV.Promise} A promise that will be resolved with the result
          * of the function.
          */
-        function verifySmsCode<T>(code: string, phone: string, options?: SuccessFailureOptions): Promise<T>;
+        function verifySmsCode<T>(code: string, phone: string, options?: SuccessFailureOptions): IPromise<T>;
         function define(name: string, options?: { fetchUser?: boolean }, handler?: (req: CloudResquest, res: CloudResponse) => any): void;
 
         class BaseHookRequest {
@@ -2739,7 +2739,7 @@ declare module AV {
          * @param {Object} The options objects that makes the request.
          * @return {AV.Promise}  A promise that will be resolved with a AV.Cloud.HTTPResponse object when the request completes.
          */
-        function httpRequest<T>(options): Promise<T>;
+        function httpRequest<T>(options): IPromise<T>;
 
         /**
          * Switches the LeanCloud SDK to using the Master key.  The Master key grants
@@ -2933,7 +2933,7 @@ declare module AV {
          * @return {AV.Promise} A promise that is resolved with the results when
          * the query completes.
          */
-        find<T>(options?: SuccessFailureOptions): Promise<T>;
+        find<T>(options?: SuccessFailureOptions): IPromise<T>;
     }
 
     /**
@@ -2962,7 +2962,7 @@ declare module AV {
          * @return {AV.Promise} A promise that is fulfilled when the send
          *     completes.
          */
-        static sendStatusToFollowers<T>(status: Status, options?: SuccessFailureOptions): Promise<T>;
+        static sendStatusToFollowers<T>(status: Status, options?: SuccessFailureOptions): IPromise<T>;
 
         /**
          * <p>Send  a status from current signined user to other user's private status inbox.</p>
@@ -2985,7 +2985,7 @@ declare module AV {
          * @return {AV.Promise} A promise that is fulfilled when the send
          *     completes.
          */
-        static sendPrivateStatus<T>(status: Status, target: User | string, options?: SuccessFailureOptions): Promise<T>;
+        static sendPrivateStatus<T>(status: Status, target: User | string, options?: SuccessFailureOptions): IPromise<T>;
 
         /**
          * Count unread statuses in someone's inbox.For example:<br/>
@@ -3001,7 +3001,7 @@ declare module AV {
          * @return {AV.Promise} A promise that is fulfilled when the count
          *     completes.
          */
-        static countUnreadStatuses<T>(owner: User | string): Promise<T>;
+        static countUnreadStatuses<T>(owner: User | string): IPromise<T>;
 
         /**
          * Create a status query to find someone's published statuses.For example:<br/>
@@ -3059,7 +3059,7 @@ declare module AV {
          * @return {AV.Promise} A promise that is fulfilled when the destroy
          *     completes.
          */
-        destroy<T>(options?: SuccessFailureOptions): Promise<T>;
+        destroy<T>(options?: SuccessFailureOptions): IPromise<T>;
         /**
           * Cast the AV.Status object to an AV.Object pointer.
           * @return {AV.Object} A AV.Object pointer.
@@ -3086,7 +3086,7 @@ declare module AV {
          * @return {AV.Promise} A promise that is fulfilled when the send
          *     completes.
          */
-        send<T>(options?: SuccessFailureOptions): Promise<T>
+        send<T>(options?: SuccessFailureOptions): IPromise<T>
     }
 
     /**
