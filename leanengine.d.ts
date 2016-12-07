@@ -89,6 +89,17 @@ declare module AV {
         then<U>(resolvedCallback: (value: T) => IPromise<U>, rejectedCallback?: (reason: any) => IPromise<U>): IPromise<T>;
         then<U>(resolvedCallback: (value: T) => U, rejectedCallback?: (reason: any) => IPromise<U>): IPromise<U>;
         then<U>(resolvedCallback: (value: T) => U, rejectedCallback?: (reason: any) => U): IPromise<U>;
+
+
+        always?(callback: Function): IPromise<T>;
+        done?(callback: Function): IPromise<T>;
+        fail?(callback: Function): IPromise<T>;
+        reject?(error: any): void;
+        resolve?(result: any): void;
+
+        catch?(onRejected: Function): IPromise<T>;
+        finally?(callback: Function): IPromise<T>;
+        try?(callback: Function): IPromise<T>;
     }
 
     /**
